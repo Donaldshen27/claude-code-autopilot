@@ -218,6 +218,74 @@
                     "captureMessage"
                 ]
             }
+        },
+        "codex-review": {
+            "type": "quality",
+            "enforcement": "suggest",
+            "priority": "medium",
+            "description": "Get second opinion from OpenAI Codex after significant code changes",
+            "promptTriggers": {
+                "keywords": [
+                    "code review",
+                    "codex",
+                    "second opinion",
+                    "review code",
+                    "security review",
+                    "performance review"
+                ],
+                "intentPatterns": [
+                    "(get|request|need).*?(codex|second opinion|review)",
+                    "(review|check|validate).*?(security|performance|logic)",
+                    "codex.*?review"
+                ]
+            },
+            "fileTriggers": {
+                "pathPatterns": [
+                    "**/*.ts",
+                    "**/*.tsx",
+                    "**/*.py",
+                    "**/*.js",
+                    "**/*.jsx"
+                ],
+                "pathExclusions": [
+                    "**/*.test.ts",
+                    "**/*.test.tsx",
+                    "**/*.test.py",
+                    "**/test_*.py",
+                    "**/*_test.py",
+                    "**/*.test.js",
+                    "**/*.test.jsx",
+                    "**/*.spec.ts",
+                    "**/*.spec.tsx",
+                    "**/*.spec.py",
+                    "**/*.spec.js",
+                    "**/*.spec.jsx",
+                    "**/*.md",
+                    "**/node_modules/**",
+                    "**/.git/**"
+                ],
+                "contentPatterns": [
+                    "authenticate",
+                    "authorize",
+                    "jwt\\.verify",
+                    "jwt\\.sign",
+                    "bcrypt",
+                    "crypto\\.",
+                    "password",
+                    "sql.*query",
+                    "SELECT.*FROM",
+                    "exec\\(",
+                    "eval\\("
+                ]
+            },
+            "skipConditions": {
+                "sessionSkillUsed": true,
+                "fileMarkers": [
+                    "@skip-codex-review",
+                    "skip-codex-review"
+                ],
+                "envOverride": "SKIP_CODEX_REVIEW"
+            }
         }
     },
     "notes": {

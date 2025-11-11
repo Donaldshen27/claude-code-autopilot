@@ -1,5 +1,7 @@
 # Codex Review Hook Setup Guide
 
+> **💡 Efficiency Tip:** Consider using the **codex-review skill** (`.claude/skills/codex-review/`) instead of the PreToolUse hook for non-blocking, context-aware code reviews. The skill approach avoids the 2-15 second latency per Edit/Write operation. See `.claude/skills/codex-review/SKILL.md` for details.
+
 This guide explains how to set up and use the Codex Review Hook for automatic code review in Claude Code.
 
 ## What is the Codex Review Hook?

@@ -1,7 +1,25 @@
 #!/usr/bin/env python3
 """
 Codex Review Hook for Claude Code
-This script reviews code changes before they're applied using codex
+
+!!! DEPRECATED - DO NOT USE AS PreToolUse HOOK !!!
+
+This approach blocks every Edit/Write operation (2-15 seconds each),
+creating significant latency during coding with no way to batch reviews.
+
+RECOMMENDED APPROACH: Use the 'codex-review' skill instead
+- Location: .claude/skills/codex-review/
+- Benefit: Non-blocking suggestions, context-aware triggering
+- Activation: Configured in skill-rules.json
+- Usage: Claude suggests review at appropriate times, you decide when to run it
+
+This file is kept for reference and alternative workflows (e.g., git pre-commit),
+but should NOT be registered as a PreToolUse hook in .claude/settings.json.
+
+If you still want to use this script:
+- Consider git pre-commit hook (batch review at commit time)
+- Consider PostToolUse + Stop hook (batch review at end of conversation)
+- DO NOT use as PreToolUse (too much latency)
 """
 
 import json

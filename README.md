@@ -59,37 +59,52 @@ Three-file knowledge persistence system:
 
 ## 📦 Installation
 
-### Quick Start (15 minutes)
+### Quick Start (One Command!)
 
-1. **Clone this repository:**
+**Install to any project with a single command:**
+
 ```bash
-cd your-project-directory
-git clone https://github.com/yourusername/claude-code-autopilot.git .claude-autopilot
+curl -sL https://raw.githubusercontent.com/donaldshen27/claude-code-autopilot/main/install.sh | bash -s /path/to/your/project
 ```
 
-2. **Copy the `.claude` directory to your project:**
-```bash
-cp -r .claude-autopilot/.claude ./
-```
+That's it! The installer will:
+- ✓ Download the latest template from GitHub
+- ✓ Backup any existing files (`.backup.timestamp`)
+- ✓ Copy all skills, agents, hooks, and commands
+- ✓ Install hook dependencies automatically
+- ✓ Set correct permissions
+- ✓ Verify installation
 
-3. **Install hook dependencies (for TypeScript hooks):**
+Then just:
 ```bash
-cd .claude/hooks
-npm install
-```
-
-4. **Configure settings:**
-Edit `.claude/settings.json` to customize:
-- Hook behavior
-- Skill activation rules
-- Tool permissions
-
-5. **Start using Claude Code:**
-```bash
+cd /path/to/your/project
 claude
 ```
 
 The hooks will automatically start suggesting relevant skills!
+
+### Alternative: Manual Installation
+
+If you prefer to install manually or want to inspect first:
+
+1. **Clone this repository:**
+```bash
+git clone https://github.com/donaldshen27/claude-code-autopilot.git
+cd claude-code-autopilot
+```
+
+2. **Run the installer locally:**
+```bash
+./install.sh /path/to/your/project
+```
+
+3. **Or copy manually:**
+```bash
+cp -r .claude /path/to/your/project/
+cp -r dev /path/to/your/project/
+cd /path/to/your/project/.claude/hooks
+npm install
+```
 
 ## 🚀 Usage
 

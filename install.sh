@@ -1,9 +1,27 @@
 #!/bin/bash
 
 # Claude Code Autopilot - Installation Script
-# Usage: curl -sL https://raw.githubusercontent.com/donaldshen27/claude-code-autopilot/main/install.sh | bash -s /path/to/target/project
+# Usage: curl -sL https://raw.githubusercontent.com/donaldshen27/claude-code-autopilot/main/install.sh | bash -s -- /path/to/target/project
+# Usage (skip confirmations): curl -sL https://raw.githubusercontent.com/donaldshen27/claude-code-autopilot/main/install.sh | bash -s -- -y /path/to/target/project
 
 set -e  # Exit on error
+
+# Parse flags
+SKIP_CONFIRM=false
+TARGET_DIR=""
+
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    -y|--yes)
+      SKIP_CONFIRM=true
+      shift
+      ;;
+    *)
+      TARGET_DIR="$1"
+      shift
+      ;;
+  esac
+done
 
 # Color codes for output
 RED='\033[0;31m'
@@ -90,22 +108,29 @@ function preflight_checks() {
   if [ -z "$TARGET_DIR" ]; then
     echo -e "${RED}❌ Error: No target directory specified${NC}"
     echo ""
-    echo "Usage: curl -sL <script-url> | bash -s /path/to/target/project"
+    echo "Usage:"
+    echo "  curl -sL <script-url> | bash -s -- /path/to/target/project"
+    echo "  curl -sL <script-url> | bash -s -- -y /path/to/target/project  # Skip confirmations"
     exit 1
   fi
 
   # Create target directory if it doesn't exist
   if [ ! -d "$TARGET_DIR" ]; then
-    echo ""
-    echo -e "${YELLOW}Directory doesn't exist: $TARGET_DIR${NC}"
-    read -p "Create it? (y/n) " -n 1 -r
-    echo ""
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
+    if [ "$SKIP_CONFIRM" = true ]; then
       mkdir -p "$TARGET_DIR"
-      echo -e "  ${GREEN}✓${NC} Directory created"
+      echo -e "  ${GREEN}✓${NC} Created directory: $TARGET_DIR"
     else
-      echo "Installation cancelled."
-      exit 1
+      echo ""
+      echo -e "${YELLOW}Directory doesn't exist: $TARGET_DIR${NC}"
+      read -p "Create it? (y/n) " -n 1 -r < /dev/tty
+      echo ""
+      if [[ $REPLY =~ ^[Yy]$ ]]; then
+        mkdir -p "$TARGET_DIR"
+        echo -e "  ${GREEN}✓${NC} Directory created"
+      else
+        echo "Installation cancelled."
+        exit 1
+      fi
     fi
   fi
 
@@ -136,12 +161,16 @@ function display_plan() {
     echo -e "   ${BLUE}ℹ️  Backups will be created with timestamp suffix${NC}"
   fi
 
-  echo ""
-  read -p "Continue with installation? (y/n) " -n 1 -r
-  echo ""
-  if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-    echo "Installation cancelled."
-    exit 0
+  if [ "$SKIP_CONFIRM" = false ]; then
+    echo ""
+    read -p "Continue with installation? (y/n) " -n 1 -r < /dev/tty
+    echo ""
+    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+      echo "Installation cancelled."
+      exit 0
+    fi
+  else
+    echo ""
   fi
 }
 
@@ -357,9 +386,6 @@ function print_success() {
 function main() {
   print_banner
 
-  # Get target directory from first argument
-  TARGET_DIR="$1"
-
   preflight_checks
   display_plan
   download_template
@@ -371,5 +397,5 @@ function main() {
   print_success
 }
 
-# Run main with all arguments
-main "$@"
+# Run main (arguments already parsed above)
+main

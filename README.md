@@ -64,8 +64,10 @@ Three-file knowledge persistence system:
 **Install to any project with a single command:**
 
 ```bash
-curl -sL https://raw.githubusercontent.com/donaldshen27/claude-code-autopilot/main/install.sh | bash -s /path/to/your/project
+curl -sL https://raw.githubusercontent.com/donaldshen27/claude-code-autopilot/main/install.sh | bash -s -- -y /path/to/your/project
 ```
+
+> **Note:** The `-y` flag skips confirmation prompts. Omit it if you want to be prompted before installation.
 
 That's it! The installer will:
 - ✓ Download the latest template from GitHub

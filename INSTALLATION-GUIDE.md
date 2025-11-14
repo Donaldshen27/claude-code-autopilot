@@ -7,7 +7,17 @@
 Install to any project with a single command:
 
 ```bash
-curl -sL https://raw.githubusercontent.com/donaldshen27/claude-code-autopilot/main/install.sh | bash -s /path/to/your/project
+curl -sL https://raw.githubusercontent.com/donaldshen27/claude-code-autopilot/main/install.sh | bash -s -- -y /path/to/your/project
+```
+
+**Without confirmation prompts (recommended for scripts):**
+```bash
+curl -sL https://raw.githubusercontent.com/donaldshen27/claude-code-autopilot/main/install.sh | bash -s -- -y /path/to/your/project
+```
+
+**With confirmation prompts:**
+```bash
+curl -sL https://raw.githubusercontent.com/donaldshen27/claude-code-autopilot/main/install.sh | bash -s -- /path/to/your/project
 ```
 
 ### What Gets Installed

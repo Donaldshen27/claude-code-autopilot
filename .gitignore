@@ -25,3 +25,4 @@ yarn-error.log*
 
 # User-specific settings (optional - uncomment if you don't want to share)
 # .claude/settings.local.json
+.claude/tsc-cache/

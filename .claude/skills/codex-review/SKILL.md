@@ -1,28 +1,27 @@
 ---
 name: codex-review
-description: Use after writing significant code changes to get a second opinion from OpenAI Codex - proactive quality check for complex implementations
+description: AUTOMATICALLY run Codex review after writing security-sensitive code (auth, crypto, SQL) - get a second opinion from OpenAI Codex
 ---
 
-# Codex Code Review
+# Codex Code Review - AUTO-EXECUTE MODE
 
-Get a second opinion from OpenAI Codex on your code changes.
+**IMPORTANT:** When this skill activates, you MUST automatically run a Codex review using the Bash tool. Do not ask for permission - just execute it.
 
 **Core principle:** Two LLMs are better than one.
 
-## When to Use Codex Review
+## When to Auto-Execute Codex Review
 
-**Suggested scenarios:**
-- After implementing complex logic or algorithms
-- When making architectural changes
-- After writing security-sensitive code (auth, validation, permissions)
-- When working with unfamiliar patterns or libraries
-- Before committing significant refactorings
+**MUST run review after writing:**
+- Authentication/authorization code (jwt.verify, bcrypt, crypto)
+- SQL queries or database operations
+- Password handling or cryptographic operations
+- Input validation or sanitization
+- exec(), eval(), or dynamic code execution
 
 **Skip when:**
 - Trivial changes (documentation, comments, formatting)
-- Already reviewed by code-reviewer subagent
 - Changes are < 10 lines
-- Time-sensitive fixes (can review later)
+- User explicitly says "skip review" or has `@skip-codex-review` marker
 
 ## How to Request Codex Review
 
